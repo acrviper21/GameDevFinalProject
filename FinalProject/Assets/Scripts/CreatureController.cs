@@ -16,11 +16,16 @@ public class CreatureController : MonoBehaviour
     [SerializeField] float groundCheckRadius = 0.1f;
     Vector3 gravityVelocity = Vector3.zero;
 
+    int health = 1;
+    int coins = 0;
+    [SerializeField] int maxHealth = 3;
+
 
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
         jumpsLeft = maxJumps;
+        health = maxHealth;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -79,5 +84,48 @@ public class CreatureController : MonoBehaviour
         }
         gravityVelocity.y += gravity * Time.deltaTime;
         characterController.Move(gravityVelocity * Time.deltaTime);
+    }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+    
+    public void SetHealth(int newHealth)
+    {
+        health = newHealth;
+    }
+
+    public bool IncrementHealth()
+    {
+        health++;
+        if(health > maxHealth)
+        {
+            health = maxHealth;
+            return false;
+        }
+        return true;
+    }
+
+    public void IncrementCoins()
+    {
+        coins++;
+        //Debug.Log("Player coins: " + coins);
+    }
+
+    public void IncrementCoins(int amountToIncrement)
+    {
+        coins += amountToIncrement;
+        //Debug.Log("Player coins: " + coins);
+    }
+
+    public int GetCoins()
+    {
+        return coins;
+    }
+
+    public void SetCoins(int newAmount)
+    {
+        coins = newAmount;
     }
 }
