@@ -16,7 +16,7 @@ public class CreatureController : MonoBehaviour
     [SerializeField] float groundCheckRadius = 0.1f;
     Vector3 gravityVelocity = Vector3.zero;
 
-    int health = 1;
+    int health = 3;
     int coins = 0;
     [SerializeField] int maxHealth = 3;
 
@@ -107,12 +107,15 @@ public class CreatureController : MonoBehaviour
         return true;
     }
 
+    //Increment coins by 1
+    //DELETE ME later
     public void IncrementCoins()
     {
         coins++;
         //Debug.Log("Player coins: " + coins);
     }
 
+    //Increment coins based on the type collected
     public void IncrementCoins(int amountToIncrement)
     {
         coins += amountToIncrement;
