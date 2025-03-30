@@ -116,9 +116,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c30c0bb57a5ada9b367e5615cfbd40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinValue: 1
   rotateSpeed: 150
   audioSource: {fileID: 5001617497444659373}
-  coinPickupSound: {fileID: 0}
+  coinPickupSound: {fileID: 8300000, guid: 60240b07a10f3f6f2a570cc260bf234c, type: 3}
   player: {fileID: 0}
 --- !u!82 &5001617497444659373
 AudioSource:
@@ -132,7 +133,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 5665482697680325236, guid: ff391380fb35f0cdf8891917a5c9800a, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

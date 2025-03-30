@@ -16,7 +16,7 @@ public class CreatureController : MonoBehaviour
     [SerializeField] float groundCheckRadius = 0.1f;
     Vector3 gravityVelocity = Vector3.zero;
 
-    int health = 3;
+    int health = 1;
     int coins = 0;
     [SerializeField] int maxHealth = 3;
 
@@ -25,7 +25,7 @@ public class CreatureController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         jumpsLeft = maxJumps;
-        health = maxHealth;
+        //health = maxHealth;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
