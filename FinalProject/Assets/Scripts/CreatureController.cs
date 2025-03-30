@@ -15,6 +15,7 @@ public class CreatureController : MonoBehaviour
     [SerializeField] LayerMask jumpLayers;
     [SerializeField] float groundCheckRadius = 0.1f;
     Vector3 gravityVelocity = Vector3.zero;
+    [SerializeField] GamePlayCanvasHandler gamePlayCanvasHandler;
 
     int health = 1;
     int coins = 0;
@@ -25,7 +26,7 @@ public class CreatureController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         jumpsLeft = maxJumps;
-        //health = maxHealth;
+        health = maxHealth;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -107,18 +108,17 @@ public class CreatureController : MonoBehaviour
         return true;
     }
 
-    //Increment coins by 1
-    //DELETE ME later
-    public void IncrementCoins()
+    public int GetMaxHealth()
     {
-        coins++;
-        //Debug.Log("Player coins: " + coins);
+        return maxHealth;
     }
 
     //Increment coins based on the type collected
+    //Update coin ui when collecting coin
     public void IncrementCoins(int amountToIncrement)
     {
         coins += amountToIncrement;
+        gamePlayCanvasHandler.UpdateCoinText();
         //Debug.Log("Player coins: " + coins);
     }
 
@@ -127,6 +127,8 @@ public class CreatureController : MonoBehaviour
         return coins;
     }
 
+    //Allow to set the coins to an exact amount.
+    //For loading later
     public void SetCoins(int newAmount)
     {
         coins = newAmount;
