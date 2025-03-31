@@ -16,6 +16,8 @@ public class CreatureController : MonoBehaviour
     [SerializeField] float groundCheckRadius = 0.1f;
     Vector3 gravityVelocity = Vector3.zero;
     [SerializeField] GamePlayCanvasHandler gamePlayCanvasHandler;
+    [Header("Health UI")]
+    [SerializeField] HealthBarHandler healthBarHandler;
 
     int health = 1;
     int coins = 0;
@@ -26,7 +28,7 @@ public class CreatureController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         jumpsLeft = maxJumps;
-        health = maxHealth;
+        //health = maxHealth;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -105,6 +107,7 @@ public class CreatureController : MonoBehaviour
             health = maxHealth;
             return false;
         }
+        healthBarHandler.UpdateHealth();
         return true;
     }
 

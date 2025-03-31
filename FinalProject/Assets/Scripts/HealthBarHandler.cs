@@ -17,9 +17,9 @@ public class HealthBarHandler : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateHealth()
     {
-        
+        Image newPip = Instantiate(healthPipPrefab, transform);
+        pips.Add(newPip);
     }
 }
