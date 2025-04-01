@@ -8,6 +8,9 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] CreatureController player;
     Vector2 movementInput;
     [SerializeField] Transform cameraTransform;
+    [SerializeField] PlayerInput playerInput;
+    string uiMap = "UI";
+    string playerMap = "Player";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,6 +34,12 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void MovePlayer()
     {
+        //Disable player movement if dialogue is going on
+        if(playerInput.currentActionMap.name == uiMap)
+        {
+            return;
+        }
+        
         Vector3 cameraForward = cameraTransform.forward;
         cameraForward.y = 0;
 
@@ -47,6 +56,11 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void JumpEvent(InputAction.CallbackContext context)
     {
+        //Disable player movement if dialogue is going on
+        if(playerInput.currentActionMap.name == uiMap)
+        {
+            return;
+        }
         if (context.performed)
         {
             player.Jump();
