@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TutorialDialogue : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class TutorialDialogue : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(Input.GetJoystickNames().Length > 0)
+        if(Gamepad.all.Count > 0)
         {
             //usingController = true;
             SetDialogueForController();
