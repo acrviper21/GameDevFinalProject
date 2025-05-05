@@ -125,4 +125,5 @@ MonoBehaviour:
   projectileLife: 3
   timeAlive: 0
   projectileHeight: 0.7
+  projectileDamage: 1
   player: {fileID: 5359415380720046607, guid: 84b6994f4aebce6569edd66ac9bef302, type: 3}

@@ -13,6 +13,10 @@ public class EnemyHealthController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        Debug.Log("Damaged");
+        health -= damage;
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

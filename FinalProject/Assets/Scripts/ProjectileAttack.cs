@@ -5,6 +5,7 @@ public class ProjectileAttack : MonoBehaviour
 {
     [Header("Player Attack Stats")]
     [SerializeField] float projectileSpeed = 5f;
+    float projectileMovementSpeed = 0f;
     [SerializeField] float projectileLife = 3f;
     [SerializeField] float timeAlive = 0f;
     [SerializeField] float projectileHeight = .70f;
@@ -28,7 +29,7 @@ public class ProjectileAttack : MonoBehaviour
         }
 
         //Move projectile forward
-        this.transform.position += this.transform.forward * projectileSpeed * Time.deltaTime;
+        this.transform.position += this.transform.forward * projectileMovementSpeed * Time.deltaTime;
     }
 
     //Used to get playerForward direction for projectile
@@ -42,6 +43,11 @@ public class ProjectileAttack : MonoBehaviour
         //Set projectile realtive to the player
         Vector3 newPos = playerTransform - new Vector3(0, projectileHeight, 0);
         transform.position = newPos;
+    }
+
+    public void SetAttackSpeed(float playerSpeed)
+    {
+        projectileMovementSpeed = playerSpeed + projectileSpeed;
     }
 
     void OnTriggerEnter(Collider other)

@@ -22,10 +22,10 @@ public class CreatureController : MonoBehaviour
     [SerializeField] HealthBarHandler healthBarHandler;
 
     [Header("Attack")]
-    [SerializeField] float projectileCoolDown = 1f;
-    [SerializeField] float projectileTimeBetweenShots;
+    [SerializeField] float projectileCoolDown = 2f;
+    [SerializeField] float projectileCoolDownTimer = 0f;
+    [SerializeField] bool canShoot = true;
     [SerializeField] GameObject attackPrefab;
-    [SerializeField] List<GameObject> projectileList;
 
     int health = 1;
     int coins = 0;
@@ -41,7 +41,7 @@ public class CreatureController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        projectileList = new List<GameObject>();
+
     }
 
     // Update is called once per frame
@@ -50,10 +50,14 @@ public class CreatureController : MonoBehaviour
         ApplyGravity();
         //Debug.Log($"Jumps Left: {jumpsLeft}");
 
-        if (projectileList.Count > 0)
+        if(!canShoot)
         {
-
-        }
+            projectileCoolDownTimer -= Time.deltaTime;
+            if(projectileCoolDownTimer <= 0)
+            {
+                canShoot = true;
+            }  
+        }     
     }
 
     public void MovePlayer(Vector3 moveDir)
@@ -153,12 +157,24 @@ public class CreatureController : MonoBehaviour
     //Allow the player to shoot at the enemy
     public void ShootProjectile()
     {
+        //If player has shot then return and wait for cooldown
+        if(!canShoot)
+        {
+            return;
+        }
         GameObject newProjectile = Instantiate(attackPrefab, transform.position + transform.forward, Quaternion.identity);
         //Pass in player forward direction for the projectile
         newProjectile.GetComponent<ProjectileAttack>().GetPlayerForward(transform.forward);
         //Pass in player transform to get proper height for projectile
         newProjectile.GetComponent<ProjectileAttack>().GetplayerTransform(transform.position);
+        //Set the projectile speed so it moves faster than the player
+        newProjectile.GetComponent<ProjectileAttack>().SetAttackSpeed(moveSpeed);
         //Add the projectile to the list
         //projectileList.Add(newProjectile);
+        
+        //If player has shot then set canShoot to false
+        //Set the cooldown timer to the cooldown
+        canShoot = false;
+        projectileCoolDownTimer = projectileCoolDown;
     }
 }
