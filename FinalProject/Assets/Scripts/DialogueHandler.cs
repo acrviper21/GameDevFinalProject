@@ -21,20 +21,12 @@ public class DialogueHandler : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
+    //NPC calls this function to start the dialogue
+    //It takes a list of strings to display dialogue
     public void StartDialogue(List<string> dialogue)
     {
+        //Switch to UI Map to prevent player from moving while dialogue is happening
         SwitchToUIMap();
         //Clear list and then set it to new dialogue
         dialogueSayings.Clear();
@@ -43,11 +35,8 @@ public class DialogueHandler : MonoBehaviour
         textField.text = string.Empty;
         gameObject.SetActive(true);
         index = 0;
-        // foreach (string saying in dialogueSayings)
-        // {
-        //     Debug.Log(saying);
-        // }
         
+        //Call the CoRoutine to start writing the dialogue
         StartCoroutine(WriteDialogue(dialogue[index]));
     }
 
@@ -75,6 +64,7 @@ public class DialogueHandler : MonoBehaviour
     }
 
     //Advance the dialogue 
+    //This is called by the UI Map when player presses the button
     public void NextDialogue()
     {
         //Check if CoRoutine is not running first to prevent index from incrementing more than once.
