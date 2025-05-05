@@ -72,15 +72,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: ac67b9a8b87ead15bbe31a0a8b1ffde8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.32
+      value: 13.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ac67b9a8b87ead15bbe31a0a8b1ffde8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.177
+      value: 1.116
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ac67b9a8b87ead15bbe31a0a8b1ffde8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.45
+      value: -12.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ac67b9a8b87ead15bbe31a0a8b1ffde8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -117,6 +117,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ac67b9a8b87ead15bbe31a0a8b1ffde8, type: 3}
       propertyPath: m_Name
       value: StarCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ac67b9a8b87ead15bbe31a0a8b1ffde8, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -226,7 +230,19 @@ MonoBehaviour:
     m_ActionId: 6b444451-8a00-4d00-a97e-f47457f736a8
     m_ActionName: 'Player/Look[/Mouse/delta]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: ShootProjectileEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6c2ab1b8-8984-453a-af3d-a3c78ae1679a
     m_ActionName: 'Player/Attack[/Mouse/leftButton,/Keyboard/enter]'
   - m_PersistentCalls:
@@ -305,6 +321,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DialogueHandler, Assembly-CSharp
+        m_MethodName: NextDialogue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fe2bd242-0dbf-421c-b905-4e005d6fc338
+    m_ActionName: 'UI/NextDialogue[/Keyboard/enter,/Gamepad/buttonSouth,/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player
@@ -332,6 +364,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundCheckRadius: 0.1
+  gamePlayCanvasHandler: {fileID: 0}
+  healthBarHandler: {fileID: 0}
+  projectileCoolDown: 1
+  projectileTimeBetweenShots: 0
+  attackPrefab: {fileID: 1874217694177423910, guid: 2eb2fcfc01e892f7cb3cf1f68aa63d6b, type: 3}
+  projectileList: []
+  maxHealth: 5
 --- !u!4 &4434344385255501064 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ac67b9a8b87ead15bbe31a0a8b1ffde8, type: 3}

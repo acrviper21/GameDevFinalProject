@@ -71,4 +71,18 @@ public class PlayerInputHandler : MonoBehaviour
             // }
         }
     }
+
+    public void ShootProjectileEvent(InputAction.CallbackContext context)
+    {
+        //Disable player movement if dialogue is going on
+        if(playerInput.currentActionMap.name == uiMap)
+        {
+            return;
+        }
+
+        if(context.performed)
+        {
+            player.ShootProjectile();
+        }
+    }
 }

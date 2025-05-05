@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -19,6 +21,12 @@ public class CreatureController : MonoBehaviour
     [Header("Health UI")]
     [SerializeField] HealthBarHandler healthBarHandler;
 
+    [Header("Attack")]
+    [SerializeField] float projectileCoolDown = 1f;
+    [SerializeField] float projectileTimeBetweenShots;
+    [SerializeField] GameObject attackPrefab;
+    [SerializeField] List<GameObject> projectileList;
+
     int health = 1;
     int coins = 0;
     [SerializeField] int maxHealth = 3;
@@ -33,7 +41,7 @@ public class CreatureController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        projectileList = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -41,6 +49,11 @@ public class CreatureController : MonoBehaviour
     {
         ApplyGravity();
         //Debug.Log($"Jumps Left: {jumpsLeft}");
+
+        if (projectileList.Count > 0)
+        {
+
+        }
     }
 
     public void MovePlayer(Vector3 moveDir)
@@ -135,5 +148,17 @@ public class CreatureController : MonoBehaviour
     public void SetCoins(int newAmount)
     {
         coins = newAmount;
+    }
+
+    //Allow the player to shoot at the enemy
+    public void ShootProjectile()
+    {
+        GameObject newProjectile = Instantiate(attackPrefab, transform.position + transform.forward, Quaternion.identity);
+        //Pass in player forward direction for the projectile
+        newProjectile.GetComponent<ProjectileAttack>().GetPlayerForward(transform.forward);
+        //Pass in player transform to get proper height for projectile
+        newProjectile.GetComponent<ProjectileAttack>().GetplayerTransform(transform.position);
+        //Add the projectile to the list
+        //projectileList.Add(newProjectile);
     }
 }
