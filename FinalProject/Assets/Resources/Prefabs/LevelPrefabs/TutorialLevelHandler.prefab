@@ -74,3 +74,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   playerParticleSystem: {fileID: 692537018931823671, guid: a7ab4c5c7af6d090c8eab337a6a14006, type: 3}
+  player: {fileID: 0}
+  Dialogue2SpawnPoint: {fileID: 0}
+  PlayerHeightAboveGround: 1.116

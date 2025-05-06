@@ -31,6 +31,8 @@ public class CreatureController : MonoBehaviour
     int coins = 0;
     [SerializeField] int maxHealth = 3;
 
+    MeshRenderer[] playerRenderers;
+
 
     void Awake()
     {
@@ -41,7 +43,7 @@ public class CreatureController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        playerRenderers = GetComponentsInChildren<MeshRenderer>();
     }
 
     // Update is called once per frame
@@ -187,4 +189,24 @@ public class CreatureController : MonoBehaviour
     {
         transform.position = newPosition;
     }
+
+    public void HidePlayer()
+    {
+        GetComponent<MeshRenderer>().enabled = false;
+        foreach(MeshRenderer mr in playerRenderers)
+        {
+            mr.enabled = false;
+        }
+    }
+
+    public void ShowPlayer()
+    {
+        GetComponent<MeshRenderer>().enabled = true;
+        foreach(MeshRenderer mr in playerRenderers)
+        {
+            mr.enabled = true;
+        }
+    }
+      
 }
+

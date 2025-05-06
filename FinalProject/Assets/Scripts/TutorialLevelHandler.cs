@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TutorialLevelHandler : MonoBehaviour
@@ -16,6 +14,9 @@ public class TutorialLevelHandler : MonoBehaviour
     bool hasPart2DialoguePlayed = false;
     [Header("ParticleSystem")]
     [SerializeField] ParticleSystem playerParticleSystem;
+    ParticleSystem ps;
+    bool particleSystemPlayed = false;
+    bool particleSystemFinished = false;
     [Header("Player")]
     [SerializeField] CreatureController player;
     [SerializeField] Transform Dialogue2SpawnPoint;
@@ -29,13 +30,25 @@ public class TutorialLevelHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(allCoinsCollected && allHeartsCollected && !hasPart2DialoguePlayed)
+        //Collect all coins and hearts and then instantiate the particle system
+        //After the particle system plays move player to new spawn point
+        //Then play the second part of the dialogue
+        if(allCoinsCollected && allHeartsCollected && !particleSystemPlayed/*!hasPart2DialoguePlayed*/)
         {
-            
-            //playerParticleSystem.PlayParticleSystem(player.GetPosition());
-            ParticleSystem ps = Instantiate(playerParticleSystem);
-            ps.GetComponent<DissapearAndReappearHandler>().PlayParticleSystem(player.GetPosition());
+            ps = Instantiate(playerParticleSystem);
+            ps.GetComponent<DissapearAndReappearHandler>().PlayParticleSystem(player.GetPosition(), this);
+            particleSystemPlayed = true;
+            player.HidePlayer();
+            //Destroy(ps.gameObject);
+            // SetDialogue2SpawnPoint();
+            // tutorialDialgoue.BeginPart2Dialogoue();
+            // hasPart2DialoguePlayed = true;
+        }
+        if(allCoinsCollected && allHeartsCollected && GetParticleSystemFinished() && !hasPart2DialoguePlayed)
+        {
+            //Debug.Log("Calling");
             SetDialogue2SpawnPoint();
+            player.ShowPlayer();
             tutorialDialgoue.BeginPart2Dialogoue();
             hasPart2DialoguePlayed = true;
         }
@@ -79,5 +92,17 @@ public class TutorialLevelHandler : MonoBehaviour
     {
         Vector3 newPosition = new Vector3(Dialogue2SpawnPoint.position.x, PlayerHeightAboveGround, Dialogue2SpawnPoint.position.z);
         player.SetPosition(newPosition);
+    }
+
+    public void SetParticleSystemFinished(bool finishedPlaying)
+    {
+        //Debug.Log("Before: " + finishedPlaying);
+        particleSystemFinished = finishedPlaying;
+        //Debug.Log("After: " + particleSystemFinished);
+    }
+
+    public bool GetParticleSystemFinished()
+    {
+        return particleSystemFinished;
     }
 }
