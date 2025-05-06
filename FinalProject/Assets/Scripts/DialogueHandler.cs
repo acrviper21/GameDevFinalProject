@@ -16,6 +16,7 @@ public class DialogueHandler : MonoBehaviour
     List<string> dialogueSayings = new List<string>();
     private int index;
     bool isCoroutineRunning = false;
+    bool isDialgoueActive = false;
 
     void Awake()
     {
@@ -34,6 +35,7 @@ public class DialogueHandler : MonoBehaviour
         //Set textfield to empty before displaying next dialogue
         textField.text = string.Empty;
         gameObject.SetActive(true);
+        isDialgoueActive = true;
         index = 0;
         
         //Call the CoRoutine to start writing the dialogue
@@ -82,6 +84,7 @@ public class DialogueHandler : MonoBehaviour
         else if(index >= dialogueSayings.Count && !isCoroutineRunning)
         {
             gameObject.SetActive(false);
+            isDialgoueActive = false;
             SwitchToPlayerMap();
         }
         
@@ -100,5 +103,10 @@ public class DialogueHandler : MonoBehaviour
     public void SwitchToPlayerMap()
     {
         playerInput.SwitchCurrentActionMap(playerMap);
+    }
+
+    public bool IsDialgoueActive()
+    {
+        return isDialgoueActive;
     }
 }

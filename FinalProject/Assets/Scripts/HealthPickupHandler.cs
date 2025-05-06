@@ -6,6 +6,7 @@ public class HealthPickupHandler : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip healthPickupSound;
     [SerializeField] CreatureController player;
+    [SerializeField] TutorialLevelHandler tutorialLevelHandler;
     bool isCollected = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -45,6 +46,7 @@ public class HealthPickupHandler : MonoBehaviour
         gameObject.GetComponent<MeshRenderer>().enabled = false;
         gameObject.GetComponent<BoxCollider>().enabled = false;
         isCollected = true;
+        tutorialLevelHandler.HeartsCollectedInLevel();
     }
 
     public bool IsCollected()

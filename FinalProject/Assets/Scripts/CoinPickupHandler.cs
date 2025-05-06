@@ -7,6 +7,7 @@ public class CoinPickupHandler : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip coinPickupSound;
     [SerializeField] CreatureController player;
+    [SerializeField] TutorialLevelHandler tutorialLevelHandler;
     bool isCollected = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,6 +43,7 @@ public class CoinPickupHandler : MonoBehaviour
         gameObject.GetComponent<MeshRenderer>().enabled = false;
         gameObject.GetComponent<SphereCollider>().enabled = false;
         isCollected = true;
+        tutorialLevelHandler.CoinCollectedInLevel();
     }
 
     public bool IsCollected()

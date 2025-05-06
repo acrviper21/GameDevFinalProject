@@ -177,4 +177,14 @@ public class CreatureController : MonoBehaviour
         canShoot = false;
         projectileCoolDownTimer = projectileCoolDown;
     }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public void SetPosition(Vector3 newPosition)
+    {
+        transform.position = newPosition;
+    }
 }
