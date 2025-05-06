@@ -7,7 +7,7 @@ public class TutorialLevelHandler : MonoBehaviour
     [SerializeField] TutorialDialogue tutorialDialgoue;
     [Header("Coins")]
     [SerializeField] List<CoinPickupHandler> coins;
-    bool allCoinsCollected = true;
+    bool allCoinsCollected = false;
     [Header("Hearts")]
     [SerializeField] List<HealthPickupHandler> hearts;
     bool allHeartsCollected = false;
@@ -33,21 +33,26 @@ public class TutorialLevelHandler : MonoBehaviour
         //Collect all coins and hearts and then instantiate the particle system
         //After the particle system plays move player to new spawn point
         //Then play the second part of the dialogue
-        if(allCoinsCollected && allHeartsCollected && !particleSystemPlayed/*!hasPart2DialoguePlayed*/)
+        if(allCoinsCollected && allHeartsCollected && !particleSystemPlayed)
         {
             ps = Instantiate(playerParticleSystem);
             ps.GetComponent<DissapearAndReappearHandler>().PlayParticleSystem(player.GetPosition(), this);
             particleSystemPlayed = true;
+            //Hide player in particle system
             player.HidePlayer();
-            //Destroy(ps.gameObject);
-            // SetDialogue2SpawnPoint();
-            // tutorialDialgoue.BeginPart2Dialogoue();
-            // hasPart2DialoguePlayed = true;
         }
+        //Once particle system is finished, move player to the new spawn point
         if(allCoinsCollected && allHeartsCollected && GetParticleSystemFinished() && !hasPart2DialoguePlayed)
         {
             //Debug.Log("Calling");
+            //Move player to new location
             SetDialogue2SpawnPoint();
+            ps = Instantiate(playerParticleSystem);
+            ps.GetComponent<DissapearAndReappearHandler>().PlayParticleSystem(player.GetPosition(), this);
+
+            //Have player look at direction of store before starting next dialogue
+            player.SetRotation(Dialogue2SpawnPoint.forward);
+            //Show player in particle system
             player.ShowPlayer();
             tutorialDialgoue.BeginPart2Dialogoue();
             hasPart2DialoguePlayed = true;
@@ -106,3 +111,5 @@ public class TutorialLevelHandler : MonoBehaviour
         return particleSystemFinished;
     }
 }
+
+

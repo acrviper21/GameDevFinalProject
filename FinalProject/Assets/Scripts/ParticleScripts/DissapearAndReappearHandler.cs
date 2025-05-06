@@ -6,6 +6,7 @@ public class DissapearAndReappearHandler : MonoBehaviour
     [SerializeField] CreatureController player;
     [SerializeField] ParticleSystem playerParticleSystem;
     [SerializeField] float timeToDissapear = 1f;
+    //Used to update when the paricle system is finished playing
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

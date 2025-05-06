@@ -12,6 +12,7 @@ public class CreatureController : MonoBehaviour
     [SerializeField] float jumpSpeed = 10f;
     [SerializeField] int maxJumps = 2;
     [SerializeField] int jumpsLeft = 2;
+    
     [Header("Ground Check")]
     [SerializeField] Transform groundCheckTransform;
     [SerializeField] LayerMask jumpLayers;
@@ -190,6 +191,12 @@ public class CreatureController : MonoBehaviour
         transform.position = newPosition;
     }
 
+    //Set player to look at the new rotation when disappearing and reappearing
+    public void SetRotation(Vector3 newRotation)
+    {
+        transform.forward = newRotation;
+    }
+
     public void HidePlayer()
     {
         GetComponent<MeshRenderer>().enabled = false;
@@ -207,6 +214,7 @@ public class CreatureController : MonoBehaviour
             mr.enabled = true;
         }
     }
+
       
 }
 
