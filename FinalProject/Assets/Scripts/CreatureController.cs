@@ -34,17 +34,25 @@ public class CreatureController : MonoBehaviour
 
     MeshRenderer[] playerRenderers;
 
+    //Used for the unity interactive event for items
+    bool collidingWithItem = false;
+
+    [Header("Shop")]
+    [SerializeField] ShopScriptHandler shopHandler;
+    [SerializeField] ItemHandler itemToPurchase;
+
 
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
         jumpsLeft = maxJumps;
         //health = maxHealth;
+        playerRenderers = GetComponentsInChildren<MeshRenderer>();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerRenderers = GetComponentsInChildren<MeshRenderer>();
+        
     }
 
     // Update is called once per frame
@@ -215,6 +223,33 @@ public class CreatureController : MonoBehaviour
         }
     }
 
-      
+    public void Interact()
+    {
+        if(collidingWithItem)
+        {
+            //Debug.Log($"Item: {itemToPurchase.GetItemDescription()[0]}");
+            shopHandler.PurchaseItem(itemToPurchase.GetItemDescription());
+            //shopHandler.PurchaseItem(itemToPurchase.GetItemDescription());
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Item"))
+        {
+            collidingWithItem = true;
+            //Get item that player is colliding with
+            itemToPurchase = other.GetComponent<ItemHandler>();
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("Item"))
+        {
+            collidingWithItem = false;
+        }
+    }
+    
 }
 

@@ -25,7 +25,7 @@ public class TutorialDialogue : MonoBehaviour
     {
         if(isDialogueActive)
         {
-            isDialogueActive = dialogueHandler.IsDialgoueActive();  
+            isDialogueActive = dialogueHandler.IsDialogueActive();  
         }
     }
 

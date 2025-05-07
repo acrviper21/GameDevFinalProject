@@ -74,7 +74,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void ShootProjectileEvent(InputAction.CallbackContext context)
     {
-        //Disable player movement if dialogue is going on
+        //Disable player attack if dialogue is going on
         if(playerInput.currentActionMap.name == uiMap)
         {
             return;
@@ -84,5 +84,22 @@ public class PlayerInputHandler : MonoBehaviour
         {
             player.ShootProjectile();
         }
+    }
+
+    public void InteractEvent(InputAction.CallbackContext context)
+    {
+        //Disable player interaction if dialogue is going on
+        if(playerInput.currentActionMap.name == uiMap)
+        {
+            return;
+        }
+
+        //Check if player is interacting with an item
+        //Remove interaction in player action map to make it a button press instead of holding the button down
+        if(context.performed)
+        {
+            player.Interact();
+        }
+        
     }
 }

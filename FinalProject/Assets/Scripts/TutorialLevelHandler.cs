@@ -1,30 +1,53 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TutorialLevelHandler : MonoBehaviour
 {
     [Header("Dialogue")]
     [SerializeField] TutorialDialogue tutorialDialgoue;
+
     [Header("Coins")]
     [SerializeField] List<CoinPickupHandler> coins;
     bool allCoinsCollected = false;
+
     [Header("Hearts")]
     [SerializeField] List<HealthPickupHandler> hearts;
     bool allHeartsCollected = false;
     bool hasPart2DialoguePlayed = false;
+
     [Header("ParticleSystem")]
     [SerializeField] ParticleSystem playerParticleSystem;
     ParticleSystem ps;
     bool particleSystemPlayed = false;
     bool particleSystemFinished = false;
+
     [Header("Player")]
     [SerializeField] CreatureController player;
     [SerializeField] Transform Dialogue2SpawnPoint;
     [SerializeField] float PlayerHeightAboveGround = 1.116f;
+
+    [Header("Enemy")]
+    [SerializeField] List<EnemyController> enemies;
+
+    [Header("Store")]
+    [SerializeField] ShopScriptHandler shopHandler;
+    [SerializeField] GameObject shopKeeper;
+    List<ItemHandler> items;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         tutorialDialgoue.BeginPart1Dialogue();
+        //Cache items
+        items = shopHandler.GetItemList();
+
+        //Disable enemies until player has attack
+        foreach(EnemyController enemy in enemies)
+        {
+            enemy.gameObject.SetActive(false);
+        }
+        shopKeeper.SetActive(false);
     }
 
     // Update is called once per frame
@@ -40,6 +63,9 @@ public class TutorialLevelHandler : MonoBehaviour
             particleSystemPlayed = true;
             //Hide player in particle system
             player.HidePlayer();
+            items[0].SetShowItem(true);
+            shopHandler.ShowAvailableItems();
+            shopKeeper.SetActive(true);
         }
         //Once particle system is finished, move player to the new spawn point
         if(allCoinsCollected && allHeartsCollected && GetParticleSystemFinished() && !hasPart2DialoguePlayed)

@@ -105,8 +105,25 @@ public class DialogueHandler : MonoBehaviour
         playerInput.SwitchCurrentActionMap(playerMap);
     }
 
-    public bool IsDialgoueActive()
+    public bool IsDialogueActive()
     {
         return isDialgoueActive;
+    }
+
+    public void SetDialoguePanelActive()
+    {
+        //Switch to UI Map to prevent player from moving while dialogue is happening
+        SwitchToUIMap();
+        textField.text = string.Empty;
+        gameObject.SetActive(true);
+        isDialgoueActive = true;
+    }
+
+    public void SetDialoguePanelInactive()
+    {
+        //Switch to UI Map to prevent player from moving while dialogue is happening
+        SwitchToPlayerMap();
+        gameObject.SetActive(false);
+        isDialgoueActive = false;
     }
 }
