@@ -36,7 +36,14 @@ public class TutorialLevelHandler : MonoBehaviour
     List<ItemHandler> items;
 
     [Header("Tutorial Advancement")]
-    bool beginTutrialPart3 = false;
+    bool tutorialPart1Completed = false;
+    bool tutorialPart2Completed = false;
+    bool tutorialPart3Completed = false;
+
+    [Header("Platforms")]
+    [SerializeField] List<GameObject> platforms;
+    bool platformsHidden = false;
+    bool enemiesHidden = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,10 +53,7 @@ public class TutorialLevelHandler : MonoBehaviour
         items = shopHandler.GetItemList();
 
         //Disable enemies until player has attack
-        foreach(EnemyController enemy in enemies)
-        {
-            enemy.gameObject.SetActive(false);
-        }
+        HideEnemies();
         shopKeeper.SetActive(false);
     }
 
@@ -59,21 +63,24 @@ public class TutorialLevelHandler : MonoBehaviour
         //Collect all coins and hearts and then instantiate the particle system
         //After the particle system plays move player to new spawn point
         //Then play the second part of the dialogue
-        if(allCoinsCollected && allHeartsCollected && !particleSystemPlayed)
+        if(allCoinsCollected && allHeartsCollected && !tutorialPart1Completed)
         {
             ps = Instantiate(playerParticleSystem);
             ps.GetComponent<DissapearAndReappearHandler>().PlayParticleSystem(player.GetPosition(), this);
             particleSystemPlayed = true;
+
             //Hide player in particle system
             player.HidePlayer();
             items[0].SetShowItem(true);
             shopHandler.ShowAvailableItems();
             shopKeeper.SetActive(true);
+
+            tutorialPart1Completed = true;
+
         }
         //Once particle system is finished, move player to the new spawn point
-        if(allCoinsCollected && allHeartsCollected && GetParticleSystemFinished() && !hasPart2DialoguePlayed)
+        if(tutorialPart1Completed && particleSystemFinished && !tutorialPart2Completed)
         {
-            //Debug.Log("Calling");
             //Move player to new location
             SetDialogue2SpawnPoint();
             ps = Instantiate(playerParticleSystem);
@@ -81,10 +88,16 @@ public class TutorialLevelHandler : MonoBehaviour
 
             //Have player look at direction of store before starting next dialogue
             player.SetRotation(Dialogue2SpawnPoint.forward);
+
             //Show player in particle system
             player.ShowPlayer();
             tutorialDialgoue.BeginPart2Dialogoue();
-            hasPart2DialoguePlayed = true;
+            tutorialPart2Completed = true;
+        }
+
+        if(tutorialPart1Completed && tutorialPart2Completed && !tutorialPart3Completed)
+        {
+            BeginTutorialPart3();
         }
     }
 
@@ -142,7 +155,57 @@ public class TutorialLevelHandler : MonoBehaviour
 
     public void BeginTutorialPart3()
     {
+        //TODO
+        //Remove platforms
+        HidePlatforms();
+        ShowEnemies();
+        //Spawn enemies
+        //Teleport Player to enemy
+        //Dialogue on how to attack
+    }
+
+    public void HidePlatforms()
+    {
+        if(platformsHidden)
+        {
+            return;
+        }
+
+        foreach(GameObject platform in platforms)
+        {
+            platform.SetActive(false);
+        }
+        platformsHidden = true;
+    }
+
+    public void HideEnemies()
+    {
+        if(enemiesHidden)
+        {
+            return;
+        }
+
+        foreach(EnemyController enemy in enemies)
+        {
+            enemy.gameObject.SetActive(false);
+        }
+
+        enemiesHidden = true;
+    }
+
+    public void ShowEnemies()
+    {
+        if(!enemiesHidden)
+        {
+            return;
+        }
         
+        foreach(EnemyController enemy in enemies)
+        {
+            enemy.gameObject.SetActive(true);
+        }
+
+        enemiesHidden = false;
     }
 }
 

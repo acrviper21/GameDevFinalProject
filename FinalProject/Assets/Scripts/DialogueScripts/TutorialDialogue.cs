@@ -47,9 +47,8 @@ public class TutorialDialogue : MonoBehaviour
         isDialogueActive = true;
         tutorialPart1Dialgoue.Clear();
         tutorialPart1Dialgoue.Add("Hello there Kazul");
-        if(Gamepad.all.Count > 0)
+        if(IsUsingController())
         {
-            //usingController = true;
             SetDialogueForController();
         }
         else
@@ -64,7 +63,37 @@ public class TutorialDialogue : MonoBehaviour
         isDialogueActive = true;
         tutorialPart1Dialgoue.Clear();
         tutorialPart1Dialgoue.Add("Please head over to the shop to buy your first attack!");
+        
+        if(IsUsingController())
+        {
+            tutorialPart1Dialgoue.Add("Use the North Button to interact with the item");
+        }
+        else
+        {
+            tutorialPart1Dialgoue.Add("Use the \"E\" to interact with the item");
+        }
         dialogueHandler.StartDialogue(tutorialPart1Dialgoue);
     }
 
+    public void BeginPart3Dialogue()
+    {
+        isDialogueActive = true;
+        tutorialPart1Dialgoue.Clear();
+        
+        if(IsUsingController())
+        {
+
+        }
+        else
+        {
+
+        }
+
+    }
+
+    //Used to check what the player is using
+    public bool IsUsingController()
+    {
+        return Gamepad.all.Count > 0;
+    }
 }

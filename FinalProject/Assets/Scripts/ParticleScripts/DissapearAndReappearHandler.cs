@@ -29,6 +29,7 @@ public class DissapearAndReappearHandler : MonoBehaviour
         var main = playerParticleSystem.main;
         main.duration = timeToDissapear;
         main.loop = true;
+        tutorialLevelHandler.SetParticleSystemFinished(false);
         playerParticleSystem.Play();
         StartCoroutine(StopParticleSystem(playerParticleSystem, tutorialLevelHandler));
     }

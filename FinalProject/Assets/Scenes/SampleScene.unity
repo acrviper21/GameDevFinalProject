@@ -912,7 +912,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.11927275, y: -0.032256216, z: 0.0038770256, w: 0.99232984}
+  m_LocalRotation: {x: 0.11927276, y: -0.032256216, z: 0.0038770258, w: 0.99232984}
   m_LocalPosition: {x: 13.2, y: 4.1230583, z: -22.437168}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5081,7 +5081,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238475274}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.11927276, y: -0.03225622, z: 0.003877026, w: 0.99232984}
+  m_LocalRotation: {x: 0.11927277, y: -0.03225622, z: 0.0038770263, w: 0.99232984}
   m_LocalPosition: {x: 13.2, y: 4.1230583, z: -22.437168}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9318,12 +9318,64 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2103378811}
     - target: {fileID: 4421567676855510174, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
+      propertyPath: platforms.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421567676855510174, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
       propertyPath: 'enemies.Array.data[0]'
       value: 
       objectReference: {fileID: 985657108}
+    - target: {fileID: 4421567676855510174, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
+      propertyPath: 'platforms.Array.data[0]'
+      value: 
+      objectReference: {fileID: 393598620}
+    - target: {fileID: 4421567676855510174, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
+      propertyPath: 'platforms.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1376466246}
+    - target: {fileID: 4421567676855510174, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
+      propertyPath: 'platforms.Array.data[2]'
+      value: 
+      objectReference: {fileID: 488589994}
+    - target: {fileID: 4421567676855510174, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
+      propertyPath: 'platforms.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1099441450}
+    - target: {fileID: 4421567676855510174, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
+      propertyPath: 'platforms.Array.data[4]'
+      value: 
+      objectReference: {fileID: 762125001}
+    - target: {fileID: 4421567676855510174, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
+      propertyPath: 'platforms.Array.data[5]'
+      value: 
+      objectReference: {fileID: 1281386344}
+    - target: {fileID: 4421567676855510174, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
+      propertyPath: 'platforms.Array.data[6]'
+      value: 
+      objectReference: {fileID: 653218957}
+    - target: {fileID: 4421567676855510174, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
+      propertyPath: 'platforms.Array.data[7]'
+      value: 
+      objectReference: {fileID: 1524026349}
+    - target: {fileID: 4421567676855510174, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
+      propertyPath: 'platforms.Array.data[8]'
+      value: 
+      objectReference: {fileID: 677982389}
+    - target: {fileID: 4421567676855510174, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
+      propertyPath: 'platforms.Array.data[9]'
+      value: 
+      objectReference: {fileID: 1593217658}
+    - target: {fileID: 4421567676855510174, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
+      propertyPath: 'platforms.Array.data[10]'
+      value: 
+      objectReference: {fileID: 747248123}
     - target: {fileID: 6337550422451099948, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
       propertyPath: m_Name
       value: TutorialLevelHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337550422451099948, guid: ee40ae90bbdb1b9bf8a356c1e9666ee1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9659,7 +9711,7 @@ SceneRoots:
   - {fileID: 1871673200}
   - {fileID: 1135662119}
   - {fileID: 7392673096461765660}
-  - {fileID: 7375201362577987216}
   - {fileID: 2081595103}
   - {fileID: 1481151696}
   - {fileID: 4278476790031567225}
+  - {fileID: 7375201362577987216}
