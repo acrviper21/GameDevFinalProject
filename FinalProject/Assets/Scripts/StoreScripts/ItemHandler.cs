@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class ItemHandler : MonoBehaviour
 {
+    //Used to set player attack after purchase
+    [SerializeField] GameObject itemPrefab;
+
     [Header("Item Attributes")]
     [SerializeField] string itemName;
     [SerializeField] int itemCost;
@@ -85,11 +88,28 @@ public class ItemHandler : MonoBehaviour
         }
     }
 
-    public List<string> GetItemDescription()
+    //Used to display the item description and cost in store canvas
+    public string GetItemDescription()
     {
-        List<string> description = new List<string>();
-
-        description.Add(itemName + "\nCost: " + itemCost.ToString() + " coins");
+        string description = $"Item: {itemName}\n\nCost: {itemCost.ToString()} coins";
         return description;
+    }
+
+    public int GetItemCost()
+    {
+        return itemCost;
+    }
+
+    //Change item attributes when purchased so it's no longer visible
+    public void PurchaseItem()
+    {
+        isPurchased = true;
+        showItem = false;
+        HideItem();
+    }
+
+    public GameObject GetItemPrefab()
+    {
+        return itemPrefab;
     }
 }

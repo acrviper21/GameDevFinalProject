@@ -9,6 +9,7 @@ public class DialogueHandler : MonoBehaviour
     [SerializeField] TextMeshProUGUI textField;
     [SerializeField] float textSpeed = 1f;
     [SerializeField] PlayerInput playerInput;
+    [SerializeField] CreatureController player;
     [Header("Player Input Maps")]
     //These two are for disabling each other so they don't conflict
     string uiMap = "UI";
@@ -17,6 +18,10 @@ public class DialogueHandler : MonoBehaviour
     private int index;
     bool isCoroutineRunning = false;
     bool isDialgoueActive = false;
+    bool buttonsActive = false;
+
+    [Header("Shop")]
+    [SerializeField] ShopScriptHandler shopHandler;
 
     void Awake()
     {
@@ -37,6 +42,8 @@ public class DialogueHandler : MonoBehaviour
         gameObject.SetActive(true);
         isDialgoueActive = true;
         index = 0;
+        //buttonsActive = false;
+        //shopHandler.SetButtonsActive(buttonsActive);
         
         //Call the CoRoutine to start writing the dialogue
         StartCoroutine(WriteDialogue(dialogue[index]));
@@ -86,8 +93,33 @@ public class DialogueHandler : MonoBehaviour
             gameObject.SetActive(false);
             isDialgoueActive = false;
             SwitchToPlayerMap();
+            // if(player.GetInteractingWithItem())
+            // {
+            //     buttonsActive = true;
+            //     gameObject.SetActive(true);
+            //     isDialgoueActive = true;
+            //     //Debug.Log("Player interacting with item");
+            //     StartCoroutine(shopHandler.GetButtonActive());
+            //     //shopHandler.GetButtonActive();
+            //     shopHandler.SetButtonsActive(buttonsActive);
+            //     buttonsActive = shopHandler.GetIsButtonActive();
+            //     //Debug.Log("Active: " + buttonsActive);
+            // }
+            // if(!buttonsActive)
+            // {
+            //     Debug.Log("Running");
+            //     //shopHandler.SetButtonsActive(buttonsActive);
+            //     gameObject.SetActive(false);
+            //     isDialgoueActive = false;
+            //     SwitchToPlayerMap();
+            // }     
         }
         
+    }
+
+    public void SetButtonsActive(bool active)
+    {
+        buttonsActive = active;
     }
 
     //Switch to UI Map to prevent buttons from UI and player interfering with each other

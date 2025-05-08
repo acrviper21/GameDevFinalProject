@@ -11,24 +11,14 @@ public class ShopScriptHandler : MonoBehaviour
     [SerializeField] List<ItemHandler> items;
     [SerializeField] float itemFloatAboveTable;
 
-    [Header("Dialogue")]
-    [SerializeField] DialogueHandler dialogueHandler;
-    [SerializeField] Button BuyButton;
-    [SerializeField] Button CancelButton;
-    List<string> itemDialogue;
+    [Header("Shop")]
+    [SerializeField] GamePlayCanvasHandler gamePlayCanvas;
 
-    //List of items to reference for indexing for items in the shop
-    enum ItemList
-    {
-        SingeProjectile = 0,
-        TriProjectile = 1
-    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         //Show items that aren't purchased or player reached a certain point
         ShowAvailableItems();
-        itemDialogue = new List<string>();
     }
 
     // Update is called once per frame
@@ -63,43 +53,13 @@ public class ShopScriptHandler : MonoBehaviour
         return items;
     }
 
-    public void PurchaseItem(List<string> dialogue)
+    //Update the text of item description before displaying
+    //Display the store canvas
+    public void PurchaseItem(string itemDescription)
     {
-        BuyButton.gameObject.SetActive(false);
-        CancelButton.gameObject.SetActive(false);
-        AddDialogue(dialogue);
-        dialogueHandler.StartDialogue(itemDialogue);
-        StartCoroutine(waitForDialogueToFinish());
-    }
-
-    //Wait for dialogue to finish then show buttons to buy item
-    IEnumerator waitForDialogueToFinish()
-    {
-        Debug.Log("Dialogue Active: " + !dialogueHandler.IsDialogueActive());
-        yield return new WaitUntil(() => !dialogueHandler.IsDialogueActive());
-        Debug.Log("Done");
-        dialogueHandler.SetDialoguePanelActive();
-        BuyButton.gameObject.SetActive(true);
-        CancelButton.gameObject.SetActive(true);
-    }
-
-    //Add dialogue depending on the item being interacted with
-    public void AddDialogue(List<string> dialogue)
-    {
-        itemDialogue.Clear();
-        itemDialogue.AddRange(dialogue);
-        itemDialogue.Add("Buy Item?");
-        //Debug.Log("Dialogue Sayings: " + itemDialogue[0]);
-    }
-
-    public void BuyButtonUI()
-    {
-        Debug.Log("Buy Button Pressed");
-    }
-
-    public void CancelButtonUI()
-    {
-        Debug.Log("Don't Buy Button Pressed");
+        gamePlayCanvas.UpdateItemDescriptionText(itemDescription);
+        gamePlayCanvas.ShowStoreCanvas();
+        
     }
 
 }

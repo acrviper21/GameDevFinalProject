@@ -40,6 +40,9 @@ public class CreatureController : MonoBehaviour
     [Header("Shop")]
     [SerializeField] ShopScriptHandler shopHandler;
     [SerializeField] ItemHandler itemToPurchase;
+    //Used to check if player is interacting with the item
+    //Used to check interaction event on map
+    [SerializeField] bool interactingWithItem = false;
 
 
     void Awake()
@@ -52,7 +55,10 @@ public class CreatureController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        if(attackPrefab == null)
+        {
+            Debug.Log("Null");
+        }
     }
 
     // Update is called once per frame
@@ -153,6 +159,18 @@ public class CreatureController : MonoBehaviour
         //Debug.Log("Player coins: " + coins);
     }
 
+    //Purchases the item and disbables the item so it can't be purchased again
+    //Update the shop to display the items that are available afterwards
+    public void BuyItem(int itemCost)
+    {
+        collidingWithItem = false;
+        coins -= itemCost;
+        itemToPurchase.PurchaseItem();
+        shopHandler.ShowAvailableItems();
+        gamePlayCanvasHandler.UpdateCoinText();
+        attackPrefab = itemToPurchase.GetItemPrefab();
+    }
+
     public int GetCoins()
     {
         return coins;
@@ -169,7 +187,7 @@ public class CreatureController : MonoBehaviour
     public void ShootProjectile()
     {
         //If player has shot then return and wait for cooldown
-        if(!canShoot)
+        if(!canShoot || attackPrefab == null)
         {
             return;
         }
@@ -227,9 +245,13 @@ public class CreatureController : MonoBehaviour
     {
         if(collidingWithItem)
         {
-            //Debug.Log($"Item: {itemToPurchase.GetItemDescription()[0]}");
+            interactingWithItem = true;
+            
             shopHandler.PurchaseItem(itemToPurchase.GetItemDescription());
-            //shopHandler.PurchaseItem(itemToPurchase.GetItemDescription());
+        }
+        else
+        {
+            interactingWithItem = false;
         }
     }
 
@@ -251,5 +273,19 @@ public class CreatureController : MonoBehaviour
         }
     }
     
+    public bool GetInteractingWithItem()
+    {
+        return interactingWithItem;
+    }
+
+    public void SetInteractingWithItem(bool interacting)
+    {
+        interactingWithItem = interacting;
+    }
+
+    public int GetItemCost()
+    {
+        return itemToPurchase.GetItemCost();
+    }
 }
 
