@@ -5433,11 +5433,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c30c0bb57a5ada9b367e5615cfbd40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1313410641 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8257687421416060473, guid: f15b62f1aa4f4f4f49d447a3a862943f, type: 3}
-  m_PrefabInstance: {fileID: 4278476790031567225}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1317791648
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8590,22 +8585,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2311982601675144794, guid: f15b62f1aa4f4f4f49d447a3a862943f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3758314489925643427, guid: f15b62f1aa4f4f4f49d447a3a862943f, type: 3}
-      propertyPath: itemCost
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 3758314489925643427, guid: f15b62f1aa4f4f4f49d447a3a862943f, type: 3}
       propertyPath: showItem
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3758314489925643427, guid: f15b62f1aa4f4f4f49d447a3a862943f, type: 3}
-      propertyPath: itemPrefab
-      value: 
-      objectReference: {fileID: 1313410641}
     - target: {fileID: 5868814030132732434, guid: f15b62f1aa4f4f4f49d447a3a862943f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 108.67
@@ -8648,11 +8631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8257687421416060473, guid: f15b62f1aa4f4f4f49d447a3a862943f, type: 3}
       propertyPath: m_Name
-      value: ItemPurchasePrefab
-      objectReference: {fileID: 0}
-    - target: {fileID: 8257687421416060473, guid: f15b62f1aa4f4f4f49d447a3a862943f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: AttackPrefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9472,6 +9451,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5359415380720046607, guid: 84b6994f4aebce6569edd66ac9bef302, type: 3}
+      propertyPath: coins
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359415380720046607, guid: 84b6994f4aebce6569edd66ac9bef302, type: 3}
       propertyPath: shopHandler
       value: 
       objectReference: {fileID: 1481151697}
@@ -9645,7 +9628,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3758314489925643427, guid: f15b62f1aa4f4f4f49d447a3a862943f, type: 3}
   m_PrefabInstance: {fileID: 4278476790031567225}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313410641}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c4c3cb47171fc3d3b9b02efdff454f0, type: 3}

@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4c3cb47171fc3d3b9b02efdff454f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemPrefab: {fileID: 8257687421416060473}
   itemName: Single Projectile
   itemCost: 50
   isPurchased: 0

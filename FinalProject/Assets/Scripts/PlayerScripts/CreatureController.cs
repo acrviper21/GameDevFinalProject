@@ -55,10 +55,7 @@ public class CreatureController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(attackPrefab == null)
-        {
-            Debug.Log("Null");
-        }
+        //attackPrefab = Resources.Load<GameObject>("Prefabs/AttackPrefab");
     }
 
     // Update is called once per frame
@@ -168,7 +165,10 @@ public class CreatureController : MonoBehaviour
         itemToPurchase.PurchaseItem();
         shopHandler.ShowAvailableItems();
         gamePlayCanvasHandler.UpdateCoinText();
-        attackPrefab = itemToPurchase.GetItemPrefab();
+
+        //Load prefab resource
+        //gameObject.name must match prefab name
+        attackPrefab = Resources.Load<GameObject>("Prefabs/" + itemToPurchase.gameObject.name);
     }
 
     public int GetCoins()

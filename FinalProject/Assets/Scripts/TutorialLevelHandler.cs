@@ -35,6 +35,9 @@ public class TutorialLevelHandler : MonoBehaviour
     [SerializeField] GameObject shopKeeper;
     List<ItemHandler> items;
 
+    [Header("Tutorial Advancement")]
+    bool beginTutrialPart3 = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -135,6 +138,11 @@ public class TutorialLevelHandler : MonoBehaviour
     public bool GetParticleSystemFinished()
     {
         return particleSystemFinished;
+    }
+
+    public void BeginTutorialPart3()
+    {
+        
     }
 }
 
