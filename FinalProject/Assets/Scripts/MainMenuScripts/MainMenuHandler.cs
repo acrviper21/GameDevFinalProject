@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class MainMenuHandler : MonoBehaviour
 {
     [SerializeField] List<Button> buttons;
+    [SerializeField] Canvas optionMenu;
+    [SerializeField] Toggle fullScreen;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,11 +30,22 @@ public class MainMenuHandler : MonoBehaviour
     }
     public void OptionButtonClicked()
     {
+        OpenOptionMenu();
         //Debug.Log("Option");
     }
     public void QuitButtonClicked()
     {
         Application.Quit();
         //Debug.Log("Quit");
+    }
+
+    public void OpenOptionMenu()
+    {
+        optionMenu.enabled = true;
+    }
+
+    public void CloseOptionMenu()
+    {
+        optionMenu.enabled = false;
     }
 }
