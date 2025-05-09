@@ -14,10 +14,16 @@ public class GamePlayCanvasHandler : MonoBehaviour
     [SerializeField] List<Button> storeButtons;
     [SerializeField] TextMeshProUGUI itemDescriptionText;
 
+    [Header("Loading Screen")]
+    [SerializeField] Image loadingScreen;
+    [SerializeField] TextMeshProUGUI loadingText;
+    bool isLoading = false;
+
     bool isStoreCanvasActive = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        HideLoadingScreen();
         coinText.text = player.GetCoins().ToString();
     }
 
@@ -30,6 +36,11 @@ public class GamePlayCanvasHandler : MonoBehaviour
     public void UpdateCoinText()
     {
         coinText.text = player.GetCoins().ToString();
+    }
+
+    public void UpdateHealth(int damage)
+    {
+        player.DecrementHealth(damage);
     }
 
     //Update the description of the item with description and price
@@ -71,5 +82,29 @@ public class GamePlayCanvasHandler : MonoBehaviour
     public void CancelButtonPressed()
     {
         HideStoreCanvas();
+    }
+
+    public void ShowLoadingScreen()
+    {
+        //Debug.Log("Loading Screen " + loadingScreen.gameObject.activeSelf);
+        loadingScreen.gameObject.SetActive(true);
+        //Debug.Log("Loading Screen " + loadingScreen.gameObject.activeSelf);
+        isLoading = true;
+    }
+
+    public void HideLoadingScreen()
+    {
+        loadingScreen.gameObject.SetActive(false);
+        isLoading = false;
+    }
+
+    public void SetIsLoading(bool loading)
+    {
+        isLoading = loading;
+    }
+
+    public bool GetisLoading()
+    {
+        return isLoading;
     }
 }

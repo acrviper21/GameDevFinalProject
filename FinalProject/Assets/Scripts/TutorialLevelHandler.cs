@@ -9,11 +9,11 @@ public class TutorialLevelHandler : MonoBehaviour
 
     [Header("Coins")]
     [SerializeField] List<CoinPickupHandler> coins;
-    bool allCoinsCollected = false;
+    [SerializeField] bool allCoinsCollected = false;
 
     [Header("Hearts")]
     [SerializeField] List<HealthPickupHandler> hearts;
-    bool allHeartsCollected = false;
+    [SerializeField] bool allHeartsCollected = false;
     bool hasPart2DialoguePlayed = false;
 
     [Header("ParticleSystem")]
@@ -24,7 +24,7 @@ public class TutorialLevelHandler : MonoBehaviour
 
     [Header("Player")]
     [SerializeField] CreatureController player;
-    [SerializeField] Transform Dialogue2SpawnPoint;
+    [SerializeField] List<Transform> DialogueSpawnPoints;
     [SerializeField] float PlayerHeightAboveGround = 1.116f;
 
     [Header("Enemy")]
@@ -36,20 +36,26 @@ public class TutorialLevelHandler : MonoBehaviour
     List<ItemHandler> items;
 
     [Header("Tutorial Advancement")]
-    bool tutorialPart1Completed = false;
-    bool tutorialPart2Completed = false;
-    bool tutorialPart3Completed = false;
+    [SerializeField] bool tutorialPart1Completed = false;
+    [SerializeField] bool tutorialPart2Completed = false;
+    [SerializeField] bool tutorialPart3Completed = false;
 
     [Header("Platforms")]
     [SerializeField] List<GameObject> platforms;
     bool platformsHidden = false;
     bool enemiesHidden = false;
 
+    [Header("Canvas")]
+    [SerializeField] GamePlayCanvasHandler gamePlayCanvasHandler;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //UnComment after testing
+
+        
         tutorialDialgoue.BeginPart1Dialogue();
-        //Cache items
+        
         items = shopHandler.GetItemList();
 
         //Disable enemies until player has attack
@@ -76,18 +82,28 @@ public class TutorialLevelHandler : MonoBehaviour
             shopKeeper.SetActive(true);
 
             tutorialPart1Completed = true;
-
+            gamePlayCanvasHandler.SetIsLoading(true);
         }
         //Once particle system is finished, move player to the new spawn point
         if(tutorialPart1Completed && particleSystemFinished && !tutorialPart2Completed)
         {
+            //Set loading screen before player teleports
+            if(gamePlayCanvasHandler.GetisLoading())
+            {
+                //Debug.Log("Loading");
+                gamePlayCanvasHandler.ShowLoadingScreen();
+            }
+
             //Move player to new location
             SetDialogue2SpawnPoint();
+
+            //Hide loading screen after player teleports
+            gamePlayCanvasHandler.HideLoadingScreen();
+            
             ps = Instantiate(playerParticleSystem);
             ps.GetComponent<DissapearAndReappearHandler>().PlayParticleSystem(player.GetPosition(), this);
-
             //Have player look at direction of store before starting next dialogue
-            player.SetRotation(Dialogue2SpawnPoint.forward);
+            player.SetRotation(DialogueSpawnPoints[0].forward);
 
             //Show player in particle system
             player.ShowPlayer();
@@ -95,7 +111,7 @@ public class TutorialLevelHandler : MonoBehaviour
             tutorialPart2Completed = true;
         }
 
-        if(tutorialPart1Completed && tutorialPart2Completed && !tutorialPart3Completed)
+        if(tutorialPart1Completed && tutorialPart2Completed && !tutorialPart3Completed && player.GetAttackPrefab() != null)
         {
             BeginTutorialPart3();
         }
@@ -137,7 +153,7 @@ public class TutorialLevelHandler : MonoBehaviour
 
     public void SetDialogue2SpawnPoint()
     {
-        Vector3 newPosition = new Vector3(Dialogue2SpawnPoint.position.x, PlayerHeightAboveGround, Dialogue2SpawnPoint.position.z);
+        Vector3 newPosition = new Vector3(DialogueSpawnPoints[0].position.x, PlayerHeightAboveGround, DialogueSpawnPoints[0].position.z);
         player.SetPosition(newPosition);
     }
 
@@ -155,13 +171,36 @@ public class TutorialLevelHandler : MonoBehaviour
 
     public void BeginTutorialPart3()
     {
-        //TODO
-        //Remove platforms
-        HidePlatforms();
-        ShowEnemies();
-        //Spawn enemies
-        //Teleport Player to enemy
-        //Dialogue on how to attack
+        if(!gamePlayCanvasHandler.GetisLoading())
+        {
+            particleSystemPlayed = false;
+            gamePlayCanvasHandler.SetIsLoading(true);
+            ps = Instantiate(playerParticleSystem);
+            ps.GetComponent<DissapearAndReappearHandler>().PlayParticleSystem(player.GetPosition(), this);
+        }
+        
+        if(particleSystemFinished)
+        {
+            gamePlayCanvasHandler.ShowLoadingScreen();
+            //Remove platforms
+            HidePlatforms();
+            //Spawn enemies
+            ShowEnemies();
+            Vector3 newPosition = new Vector3(DialogueSpawnPoints[1].position.x, PlayerHeightAboveGround, DialogueSpawnPoints[1].position.z);
+            player.SetPosition(newPosition);
+            player.SetRotation(DialogueSpawnPoints[1].forward);
+            gamePlayCanvasHandler.HideLoadingScreen();
+
+
+            if(!particleSystemPlayed)
+            {
+                ps = Instantiate(playerParticleSystem);
+                ps.GetComponent<DissapearAndReappearHandler>().PlayParticleSystem(player.GetPosition(), this);
+                tutorialDialgoue.BeginPart3Dialogue();
+                particleSystemPlayed = true;
+                tutorialPart3Completed = true;
+            }
+        }
     }
 
     public void HidePlatforms()
@@ -199,7 +238,7 @@ public class TutorialLevelHandler : MonoBehaviour
         {
             return;
         }
-        
+
         foreach(EnemyController enemy in enemies)
         {
             enemy.gameObject.SetActive(true);

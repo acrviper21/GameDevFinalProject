@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 
-public class ProjectileAttack : MonoBehaviour
+public class EnemyProjectileAttack : MonoBehaviour
 {
-    [Header("Player Attack Stats")]
+    [Header("Enemy Attack Stats")]
     [SerializeField] float projectileSpeed = 5f;
     float projectileMovementSpeed = 0f;
     [SerializeField] float projectileLife = 3f;
@@ -11,7 +10,7 @@ public class ProjectileAttack : MonoBehaviour
     [SerializeField] float projectileHeight = .70f;
     [SerializeField] int projectileDamage = 1;
 
-    [SerializeField] CreatureController player;
+    [SerializeField] UpdatedEnemyController enemy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,33 +32,32 @@ public class ProjectileAttack : MonoBehaviour
     }
 
     //Used to get playerForward direction for projectile
-    public void GetPlayerForward(Vector3 playerTransformForward)
+    public void GetEnemyForward(Vector3 enemyTransformForward)
     {
-        transform.forward = playerTransformForward;
+        transform.forward = enemyTransformForward;
     }
 
-    public void GetplayerTransform(Vector3 playerTransform)
+    public void GetEnemyTransform(Vector3 enemyTransform)
     {
         //Set projectile realtive to the player
-        Vector3 newPos = playerTransform - new Vector3(0, projectileHeight, 0);
+        Vector3 newPos = enemyTransform - new Vector3(0, projectileHeight, 0);
         transform.position = newPos;
     }
 
-    public void SetAttackSpeed(float playerSpeed)
+    public void SetAttackSpeed(float enemySpeed)
     {
-        projectileMovementSpeed = playerSpeed + projectileSpeed;
+        projectileMovementSpeed = enemySpeed + projectileSpeed;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Hit: " + other.gameObject.name);
-        if(other.CompareTag("Enemy"))
+        if(other.CompareTag("Player"))
         {
-            //Debug.Log("Hit Enemy");
+            Debug.Log("Collided");
             //Destroy projectile after hit
             Destroy(this.gameObject);
             //Damage enemy after hit
-            other.GetComponent<EnemyHealthController>().TakeDamage(projectileDamage);
+            other.GetComponent<CreatureController>().DecrementHealth(projectileDamage);
         }
     }
 }

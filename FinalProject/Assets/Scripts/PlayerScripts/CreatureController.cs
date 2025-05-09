@@ -29,7 +29,7 @@ public class CreatureController : MonoBehaviour
     [SerializeField] GameObject attackPrefab;
 
     int health = 1;
-    int coins = 0;
+     int coins = 0;
     [SerializeField] int maxHealth = 3;
 
     MeshRenderer[] playerRenderers;
@@ -140,6 +140,17 @@ public class CreatureController : MonoBehaviour
         }
         healthBarHandler.UpdateHealth();
         return true;
+    }
+
+    public void DecrementHealth(int damage)
+    {
+        health -= damage;;
+        if(health < 0)
+        {
+            Debug.Log("Game Over");
+            health = 0;
+        }
+        healthBarHandler.DecrementHealth();
     }
 
     public int GetMaxHealth()
@@ -286,6 +297,11 @@ public class CreatureController : MonoBehaviour
     public int GetItemCost()
     {
         return itemToPurchase.GetItemCost();
+    }
+
+    public GameObject GetAttackPrefab()
+    {
+        return attackPrefab;
     }
 }
 

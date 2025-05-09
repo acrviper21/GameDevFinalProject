@@ -22,4 +22,14 @@ public class HealthBarHandler : MonoBehaviour
         Image newPip = Instantiate(healthPipPrefab, transform);
         pips.Add(newPip);
     }
+
+    public void DecrementHealth()
+    {
+        if(pips.Count > 0)
+        {
+            Image removePip = pips[pips.Count -1];
+            Destroy(removePip.gameObject);
+            pips.RemoveAt(pips.Count - 1);
+        }
+    }
 }

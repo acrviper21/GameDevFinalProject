@@ -16,6 +16,15 @@ public class EnemyController : MonoBehaviour
     [SerializeField] List<Transform> movePoints;
     int currentMovePointIndex = 0;
     int nextMovePointIndex = 0;
+
+    [Header("Enemy Attack")]
+    [SerializeField] GameObject enemyAttack;
+    [SerializeField] float attackCoolDown = 1f;
+    [SerializeField] float projectileSpeed = 5f;
+    [SerializeField] float attackRange = 1f;
+    float attackTimer = 0f;
+    bool canAttack = false;
+    bool attackInRange = false;
     Rigidbody rb;
 
     Vector2 enemyPosition;
@@ -37,11 +46,21 @@ public class EnemyController : MonoBehaviour
         {
             coolDownTimerLeft -= Time.deltaTime;
         }
+
+        if(!canAttack)
+        {
+            attackTimer -= Time.deltaTime;
+        }
     
         //After waiting allow the enemy to move again
         if(coolDownTimerLeft <= 0)
         {
             canMove = true;
+        }
+
+        if(attackTimer <= 0)
+        {
+            canAttack = true;
         }
     }
 
@@ -52,6 +71,11 @@ public class EnemyController : MonoBehaviour
         //Check if chasing player
         if(GetIsChasing())
         {
+            if(attackInRange)
+            {
+                //Debug.Log("waiting");
+                return;
+            }
             MoveTowardsPlayer();
             return;
             
@@ -64,7 +88,6 @@ public class EnemyController : MonoBehaviour
         {
             //Debug.Log("Here");
             GetMovePoint();
-            canMove = false;
         }
         //After getting new point have the enemy wait a few secs
         //After watiing then allow enemy to move
@@ -105,6 +128,13 @@ public class EnemyController : MonoBehaviour
 
     public void MoveTowardsPlayer()
     {
+        if(Vector2.Distance(enemyPosition, playerTransform.position) < attackRange)
+        {
+            //Debug.Log("Player is near");
+            attackInRange = true;
+            return;
+        }
+        attackInRange = false;
         Vector3 rotateDirection = playerTransform.position - transform.position;
         rotateDirection.y = 0;
         Quaternion lookDirection = Quaternion.LookRotation(rotateDirection);
@@ -139,5 +169,20 @@ public class EnemyController : MonoBehaviour
     public bool GetCanMove()
     {
         return canMove;
+    }
+
+    public void Attack()
+    {
+        if(!canAttack)
+        {
+            return;
+        }
+
+        GameObject attack = Instantiate(enemyAttack, transform.position + transform.forward, Quaternion.identity);
+        attack.GetComponent<EnemyProjectileAttack>().GetEnemyForward(transform.forward);
+        attack.GetComponent<EnemyProjectileAttack>().GetEnemyTransform(transform.position);
+        attack.GetComponent<EnemyProjectileAttack>().SetAttackSpeed(moveSpeed);
+        canAttack = false;
+        attackTimer = attackCoolDown;
     }
 }
