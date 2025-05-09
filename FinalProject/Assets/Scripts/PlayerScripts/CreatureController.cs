@@ -18,7 +18,10 @@ public class CreatureController : MonoBehaviour
     [SerializeField] LayerMask jumpLayers;
     [SerializeField] float groundCheckRadius = 0.1f;
     Vector3 gravityVelocity = Vector3.zero;
+
+    [Header("Canvas")]
     [SerializeField] GamePlayCanvasHandler gamePlayCanvasHandler;
+
     [Header("Health UI")]
     [SerializeField] HealthBarHandler healthBarHandler;
 
@@ -55,12 +58,18 @@ public class CreatureController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        //Debug.Log("LockState: " + Cursor.lockState);
         //attackPrefab = Resources.Load<GameObject>("Prefabs/AttackPrefab");
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
         ApplyGravity();
         //Debug.Log($"Jumps Left: {jumpsLeft}");
 
@@ -145,10 +154,11 @@ public class CreatureController : MonoBehaviour
     public void DecrementHealth(int damage)
     {
         health -= damage;;
-        if(health < 0)
+        if(health <= 0)
         {
-            Debug.Log("Game Over");
+            //Debug.Log("Game Over");
             health = 0;
+            StartCoroutine(gamePlayCanvasHandler.GameOver()); 
         }
         healthBarHandler.DecrementHealth();
     }

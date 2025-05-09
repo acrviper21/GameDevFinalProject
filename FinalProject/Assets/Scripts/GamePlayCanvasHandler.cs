@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GamePlayCanvasHandler : MonoBehaviour
 {
@@ -18,11 +20,15 @@ public class GamePlayCanvasHandler : MonoBehaviour
     [SerializeField] Image loadingScreen;
     [SerializeField] TextMeshProUGUI loadingText;
     bool isLoading = false;
+    
+    [Header("Game Over Screen")]
+    [SerializeField] Image GameOverScreen;
 
     bool isStoreCanvasActive = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        GameOverScreen.gameObject.SetActive(false);
         HideLoadingScreen();
         coinText.text = player.GetCoins().ToString();
     }
@@ -106,5 +112,12 @@ public class GamePlayCanvasHandler : MonoBehaviour
     public bool GetisLoading()
     {
         return isLoading;
+    }
+
+    public IEnumerator GameOver()
+    {
+        GameOverScreen.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3f); 
+        SceneManager.LoadScene("MainMenu");
     }
 }

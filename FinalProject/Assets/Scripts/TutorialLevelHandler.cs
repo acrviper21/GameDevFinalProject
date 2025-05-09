@@ -51,16 +51,15 @@ public class TutorialLevelHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //UnComment after testing
-
-        
-        tutorialDialgoue.BeginPart1Dialogue();
-        
-        items = shopHandler.GetItemList();
-
         //Disable enemies until player has attack
         HideEnemies();
         shopKeeper.SetActive(false);
+
+        items = shopHandler.GetItemList();
+        gamePlayCanvasHandler.ShowLoadingScreen();
+        
+        tutorialDialgoue.BeginPart1Dialogue();
+        gamePlayCanvasHandler.HideLoadingScreen(); 
     }
 
     // Update is called once per frame
